@@ -1,8 +1,17 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Code, Shield, Brain, Users } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const journeyRef = useRef<HTMLDivElement>(null);
+
   const highlights = [
     {
       icon: <Code className="w-6 h-6" />,
@@ -26,10 +35,88 @@ const About = () => {
     }
   ];
 
+  useEffect(() => {
+    // Title animation
+    gsap.fromTo(titleRef.current, 
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1, 
+        y: 0, 
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Cards stagger animation
+    const cards = cardsRef.current?.children;
+    if (cards) {
+      gsap.fromTo(cards,
+        { opacity: 0, y: 60, scale: 0.8 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Journey section animation
+    gsap.fromTo(journeyRef.current,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: journeyRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Card hover animations
+    const cardElements = cardsRef.current?.querySelectorAll('.highlight-card');
+    cardElements?.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { 
+          y: -8, 
+          scale: 1.02, 
+          duration: 0.3, 
+          ease: "power2.out",
+          boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { 
+          y: 0, 
+          scale: 1, 
+          duration: 0.3, 
+          ease: "power2.out",
+          boxShadow: "none"
+        });
+      });
+    });
+  }, []);
+
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8" ref={sectionRef}>
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               About Me
@@ -42,9 +129,9 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {highlights.map((item, index) => (
-            <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105 border border-slate-700/30">
+            <div key={index} className="highlight-card bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/30 cursor-pointer">
               <div className="text-blue-400 mb-4">
                 {item.icon}
               </div>
@@ -58,7 +145,7 @@ const About = () => {
           ))}
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-2xl p-8 border border-slate-600/30">
+        <div ref={journeyRef} className="mt-16 bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-2xl p-8 border border-slate-600/30">
           <h3 className="text-2xl font-bold mb-4 text-white">My Journey</h3>
           <p className="text-slate-300 leading-relaxed">
             From graphic design intern to Chief of Staff, my career has been driven by curiosity and innovation. 

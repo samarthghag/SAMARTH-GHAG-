@@ -1,8 +1,16 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
   const projects = [
     {
       title: "Prompt Dodge Game",
@@ -70,10 +78,104 @@ const Projects = () => {
     }
   ];
 
+  useEffect(() => {
+    // Title animation
+    gsap.fromTo(titleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Project cards staggered animation
+    const cards = gridRef.current?.children;
+    if (cards) {
+      gsap.fromTo(cards,
+        { 
+          opacity: 0, 
+          y: 80, 
+          scale: 0.8,
+          rotationY: 15
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotationY: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Individual card hover animations
+    const projectCards = gridRef.current?.querySelectorAll('.project-card');
+    projectCards?.forEach(card => {
+      const image = card.querySelector('.project-image');
+      const content = card.querySelector('.project-content');
+      const buttons = card.querySelectorAll('.project-button');
+
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { 
+          y: -12, 
+          scale: 1.02,
+          duration: 0.4, 
+          ease: "power2.out"
+        });
+        gsap.to(image, {
+          scale: 1.1,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+        gsap.to(buttons, {
+          opacity: 1,
+          scale: 1,
+          stagger: 0.05,
+          duration: 0.3,
+          ease: "back.out(1.7)"
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { 
+          y: 0, 
+          scale: 1,
+          duration: 0.4, 
+          ease: "power2.out"
+        });
+        gsap.to(image, {
+          scale: 1,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+        gsap.to(buttons, {
+          opacity: 0.7,
+          scale: 0.9,
+          duration: 0.2,
+          ease: "power2.out"
+        });
+      });
+    });
+  }, []);
+
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30" ref={sectionRef}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Featured Projects
@@ -85,20 +187,20 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {projects.map((project, index) => (
-            <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-slate-800/70 transition-all duration-300 hover:scale-105 border border-slate-700/30 group">
+            <div key={index} className="project-card bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700/30 cursor-pointer">
               <div className="relative overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="project-image w-full h-48 object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
               </div>
               
-              <div className="p-6">
-                <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-blue-400 transition-colors">
+              <div className="project-content p-6">
+                <h3 className="text-lg font-semibold mb-2 text-white">
                   {project.title}
                 </h3>
                 <p className="text-slate-400 text-sm mb-4 leading-relaxed">
@@ -114,10 +216,10 @@ const Projects = () => {
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <a href={project.github} className="text-slate-400 hover:text-blue-400 transition-colors">
+                  <a href={project.github} className="project-button text-slate-400 hover:text-blue-400 transition-colors opacity-70 scale-90">
                     <Github size={18} />
                   </a>
-                  <a href={project.demo} className="flex items-center gap-1 text-slate-400 hover:text-blue-400 transition-colors text-sm">
+                  <a href={project.demo} className="project-button flex items-center gap-1 text-slate-400 hover:text-blue-400 transition-colors text-sm opacity-70 scale-90">
                     <ExternalLink size={16} />
                     Demo
                   </a>
