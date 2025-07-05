@@ -1,8 +1,15 @@
 
-import React from 'react';
-import { Briefcase, Calendar } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Calendar, Building } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
   const experiences = [
     {
       title: "Chief of Staff",
@@ -31,57 +38,64 @@ const Experience = () => {
       period: "Jan – May 2024",
       description: "Created and maintained university-related web components, enhancing digital infrastructure and user experience for academic systems.",
       current: false
-    },
-    {
-      title: "Graphic Design Intern",
-      company: "YouVah",
-      period: "Apr – May 2022",
-      description: "Worked on visual design assets and branding projects, developing creative solutions for marketing and communication materials.",
-      current: false
     }
   ];
 
+  useEffect(() => {
+    const cards = cardsRef.current?.children;
+    if (cards) {
+      gsap.fromTo(cards,
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+  }, []);
+
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <section id="experience" className="py-24 bg-white" ref={sectionRef}>
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Experience
-            </span>
+          <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+            Experience
           </h2>
-          <p className="text-xl text-slate-300">
+          <p className="text-xl text-gray-600">
             My professional journey across startups, enterprises, and academic institutions.
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500 hidden md:block"></div>
-
+        <div ref={cardsRef} className="space-y-8">
           {experiences.map((exp, index) => (
-            <div key={index} className="relative mb-12 md:ml-16">
-              {/* Timeline Dot */}
-              <div className="absolute -left-20 top-6 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 hidden md:block"></div>
-              
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 hover:bg-slate-800/70 transition-all duration-300 border border-slate-700/30">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-1">{exp.title}</h3>
-                    <h4 className="text-blue-400 font-medium">{exp.company}</h4>
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-400 mt-2 md:mt-0">
-                    <Calendar size={16} />
-                    <span className="text-sm">{exp.period}</span>
-                    {exp.current && (
-                      <span className="bg-green-600/20 text-green-300 px-2 py-1 rounded-full text-xs ml-2">
-                        Current
-                      </span>
-                    )}
+            <div key={index} className="bg-gray-50 rounded-2xl p-8 hover:shadow-sm transition-shadow duration-300">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{exp.title}</h3>
+                  <div className="flex items-center gap-2 text-gray-600 mb-2">
+                    <Building size={16} />
+                    <span className="font-medium">{exp.company}</span>
                   </div>
                 </div>
-                <p className="text-slate-300 leading-relaxed">{exp.description}</p>
+                <div className="flex items-center gap-2 text-gray-500 mt-2 md:mt-0">
+                  <Calendar size={16} />
+                  <span className="text-sm">{exp.period}</span>
+                  {exp.current && (
+                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium ml-2">
+                      Current
+                    </span>
+                  )}
+                </div>
               </div>
+              <p className="text-gray-600 leading-relaxed">{exp.description}</p>
             </div>
           ))}
         </div>

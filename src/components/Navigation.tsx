@@ -1,29 +1,20 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
+import Logo from './Logo';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      const isScrolled = window.scrollY > 20;
       setScrolled(isScrolled);
-      
-      if (navRef.current) {
-        gsap.to(navRef.current, {
-          backgroundColor: isScrolled ? 'rgba(15, 23, 42, 0.95)' : 'transparent',
-          backdropFilter: isScrolled ? 'blur(8px)' : 'none',
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -31,94 +22,81 @@ const Navigation = () => {
     // Initial nav animation
     gsap.fromTo(navRef.current,
       { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.2 }
+      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
     );
-
-    // Logo animation
-    gsap.fromTo(logoRef.current,
-      { scale: 0, rotation: -180 },
-      { scale: 1, rotation: 0, duration: 0.8, ease: "back.out(1.7)", delay: 0.5 }
-    );
-
-    // Menu items stagger animation
-    const menuItems = menuRef.current?.children;
-    if (menuItems) {
-      gsap.fromTo(menuItems,
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", delay: 0.7 }
-      );
-    }
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (mobileMenuRef.current) {
-      if (isOpen) {
-        gsap.fromTo(mobileMenuRef.current,
-          { opacity: 0, y: -20, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "back.out(1.7)" }
-        );
-      } else {
-        gsap.to(mobileMenuRef.current, {
-          opacity: 0, y: -20, scale: 0.95, duration: 0.2, ease: "power2.in"
-        });
-      }
-    }
-  }, [isOpen]);
-
   const navItems = [
-    { name: 'Home', href: '#hero' },
+    { name: 'Home', href: '/' },
     { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Projects', href: '/projects' },
     { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' }
   ];
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsOpen(false);
   };
 
+  const isActive = (href: string) => {
+    if (href === '/') return location.pathname === '/';
+    if (href === '/projects') return location.pathname === '/projects';
+    return false;
+  };
+
   return (
-    <nav ref={navRef} className="fixed top-0 w-full z-50 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <div ref={logoRef} className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer">
-            Samarth Ghag
-          </div>
+    <nav 
+      ref={navRef} 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <Link to="/" className="flex items-center space-x-3">
+            <Logo size="sm" />
+            <span className="text-xl font-semibold text-gray-900 tracking-tight">
+              Samarth Ghag
+            </span>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div ref={menuRef} className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="nav-item text-slate-300 hover:text-blue-400 transition-colors duration-200 font-medium relative"
-                onMouseEnter={(e) => {
-                  gsap.to(e.currentTarget, { scale: 1.05, duration: 0.2, ease: "power2.out" });
-                }}
-                onMouseLeave={(e) => {
-                  gsap.to(e.currentTarget, { scale: 1, duration: 0.2, ease: "power2.out" });
-                }}
-              >
-                {item.name}
-              </button>
+              item.href.startsWith('#') ? (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`font-medium transition-colors duration-200 ${
+                    isActive(item.href) 
+                      ? 'text-gray-900 border-b-2 border-gray-900' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </div>
 
           {/* Mobile Navigation Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white hover:text-blue-400 transition-colors"
-            onMouseEnter={(e) => {
-              gsap.to(e.currentTarget, { scale: 1.1, rotation: 5, duration: 0.2 });
-            }}
-            onMouseLeave={(e) => {
-              gsap.to(e.currentTarget, { scale: 1, rotation: 0, duration: 0.2 });
-            }}
+            className="md:hidden p-2 text-gray-600 hover:text-gray-900"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -126,16 +104,26 @@ const Navigation = () => {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div ref={mobileMenuRef} className="md:hidden bg-slate-800/95 backdrop-blur-sm rounded-lg mt-2 py-4">
-            {navItems.map((item, index) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-700/50 transition-all duration-200"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {item.name}
-              </button>
+          <div className="md:hidden bg-white border-t border-gray-100 py-4">
+            {navItems.map((item) => (
+              item.href.startsWith('#') ? (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block w-full text-left px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </div>
         )}
