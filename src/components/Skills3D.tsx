@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, OrbitControls, Float, Sphere, Box, Torus } from '@react-three/drei';
+import { Text, OrbitControls, Float, Sphere, Box } from '@react-three/drei';
 import * as THREE from 'three';
 
 const SkillSphere = ({ position, text, color }: { position: [number, number, number], text: string, color: string }) => {
@@ -25,7 +25,6 @@ const SkillSphere = ({ position, text, color }: { position: [number, number, num
           color="white"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/inter-bold.woff"
         >
           {text}
         </Text>
@@ -61,12 +60,31 @@ const NetworkLines = () => {
 
 const Skills3D = () => {
   const [mounted, setMounted] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return <div className="w-full h-96 tech-card rounded-2xl animate-pulse" />;
+
+  if (hasError) {
+    return (
+      <div className="w-full h-96 tech-card rounded-2xl flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-cyan-400 text-xl font-bold mb-4">Skills & Expertise</div>
+          <div className="grid grid-cols-2 gap-4 text-white/80">
+            <div>React</div>
+            <div>Python</div>
+            <div>Node.js</div>
+            <div>MongoDB</div>
+            <div>AI/ML</div>
+            <div>DevOps</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const skills = [
     { text: "React", position: [-3, 2, 0] as [number, number, number], color: "#61dafb" },
@@ -78,28 +96,34 @@ const Skills3D = () => {
     { text: "Security", position: [0, 0, 3] as [number, number, number], color: "#ffa726" }
   ];
 
-  return (
-    <div className="w-full h-96 tech-card rounded-2xl overflow-hidden">
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
-        
-        <NetworkLines />
-        
-        {skills.map((skill, index) => (
-          <SkillSphere
-            key={index}
-            position={skill.position}
-            text={skill.text}
-            color={skill.color}
-          />
-        ))}
-        
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-      </Canvas>
-    </div>
-  );
+  try {
+    return (
+      <div className="w-full h-96 tech-card rounded-2xl overflow-hidden">
+        <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
+          
+          <NetworkLines />
+          
+          {skills.map((skill, index) => (
+            <SkillSphere
+              key={index}
+              position={skill.position}
+              text={skill.text}
+              color={skill.color}
+            />
+          ))}
+          
+          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+        </Canvas>
+      </div>
+    );
+  } catch (error) {
+    console.error('Skills3D rendering error:', error);
+    setHasError(true);
+    return null;
+  }
 };
 
 export default Skills3D;

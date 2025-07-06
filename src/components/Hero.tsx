@@ -51,13 +51,15 @@ const Hero = () => {
     }, "-=0.8");
 
     // Continuous floating animation for image
-    gsap.to(imageRef.current, {
-      y: -10,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "power2.inOut"
-    });
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        y: -10,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "power2.inOut"
+      });
+    }
 
   }, []);
 
@@ -96,11 +98,20 @@ const Hero = () => {
               
               {/* Main image container with tech styling */}
               <div className="relative tech-card p-4 shadow-2xl">
-                <img 
-                  src="/lovable-uploads/17014b2d-4f0b-4cf2-b3f1-10c20fad2809.png" 
-                  alt="Samarth Ghag - Software Developer"
-                  className="w-80 h-96 object-cover rounded-2xl"
-                />
+                <div className="w-80 h-96 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center">
+                  <img 
+                    src="/lovable-uploads/17014b2d-4f0b-4cf2-b3f1-10c20fad2809.png" 
+                    alt="Samarth Ghag - Software Developer"
+                    className="w-full h-full object-cover rounded-2xl"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center text-cyan-400 text-2xl font-bold code-font">
+                    SG
+                  </div>
+                </div>
                 
                 {/* Tech overlay effects */}
                 <div className="absolute inset-4 rounded-2xl border border-cyan-400/50 pointer-events-none"></div>
