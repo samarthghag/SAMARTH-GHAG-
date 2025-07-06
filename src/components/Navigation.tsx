@@ -19,17 +19,19 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     
-    // Enhanced nav animation
-    gsap.fromTo(navRef.current,
-      { y: -100, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 1.2, 
-        ease: "power3.out", 
-        delay: 0.3 
-      }
-    );
+    // Nav animation
+    if (navRef.current) {
+      gsap.fromTo(navRef.current,
+        { y: -100, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          duration: 1.2, 
+          ease: "power3.out", 
+          delay: 0.3 
+        }
+      );
+    }
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -46,11 +48,7 @@ const Navigation = () => {
     if (href.startsWith('#')) {
       const element = document.querySelector(href);
       if (element) {
-        gsap.to(window, {
-          duration: 1.5,
-          scrollTo: { y: element, offsetY: 80 },
-          ease: "power2.out"
-        });
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
     setIsOpen(false);
@@ -65,9 +63,9 @@ const Navigation = () => {
   return (
     <nav 
       ref={navRef} 
-      className={`fixed top-0 w-full z-50 transition-all duration-700 gsap-element ${
+      className={`fixed top-0 w-full z-50 transition-all duration-700 ${
         scrolled 
-          ? 'tech-card border-b border-white/10' 
+          ? 'bg-gray-900/90 backdrop-blur-md border-b border-white/10' 
           : 'bg-transparent'
       }`}
     >
@@ -82,13 +80,13 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center space-x-2 tech-card p-2">
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md p-2 rounded-2xl">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="px-6 py-3 text-white/70 hover:text-white font-medium transition-all duration-300 rounded-lg hover:bg-white/10 code-font text-sm"
+                    className="px-6 py-3 text-white/70 hover:text-white font-medium transition-all duration-300 rounded-lg hover:bg-white/10 font-mono text-sm"
                   >
                     <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
                   </button>
@@ -96,7 +94,7 @@ const Navigation = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`px-6 py-3 font-medium transition-all duration-300 rounded-lg code-font text-sm ${
+                    className={`px-6 py-3 font-medium transition-all duration-300 rounded-lg font-mono text-sm ${
                       isActive(item.href) 
                         ? 'text-white bg-white/20 shadow-lg' 
                         : 'text-white/70 hover:text-white hover:bg-white/10'
@@ -120,14 +118,14 @@ const Navigation = () => {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div className="md:hidden tech-card border-t border-white/10 rounded-b-2xl shadow-2xl m-4 mt-0">
+          <div className="md:hidden bg-gray-900/95 backdrop-blur-md border-t border-white/10 rounded-b-2xl shadow-2xl m-4 mt-0">
             <div className="p-4 space-y-2">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 code-font"
+                    className="block w-full text-left px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-mono"
                   >
                     <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
                   </button>
@@ -135,11 +133,11 @@ const Navigation = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 code-font"
+                    className="block px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-mono"
                     onClick={() => setIsOpen(false)}
                   >
                     <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
-                  </Link>
+                  </button>
                 )
               ))}
             </div>
