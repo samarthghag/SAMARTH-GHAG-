@@ -71,7 +71,7 @@ const Navigation = () => {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo only */}
+          {/* Logo */}
           <Link to="/" className="group">
             <div className="transform transition-all duration-500 group-hover:scale-110">
               <Logo size="md" className="shadow-2xl group-hover:shadow-[0_0_30px_rgba(0,212,255,0.5)]" />
@@ -137,7 +137,7 @@ const Navigation = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
-                  </button>
+                  </Link>
                 )
               ))}
             </div>
