@@ -46,14 +46,24 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900" ref={heroRef}>
+    <section 
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900" 
+      ref={heroRef}
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl"></div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Profile Image Section */}
           <div ref={imageRef} className="flex justify-center lg:justify-end order-1 lg:order-2">
             <div className="relative">
-              <div className="w-80 h-96 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-3xl flex items-center justify-center overflow-hidden">
+              <div className="w-80 h-96 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-3xl flex items-center justify-center overflow-hidden border border-cyan-500/20 shadow-2xl">
                 <img 
                   src="/lovable-uploads/17014b2d-4f0b-4cf2-b3f1-10c20fad2809.png" 
                   alt="Samarth Ghag - Software Developer"
@@ -76,13 +86,13 @@ const Hero = () => {
           {/* Content Section */}
           <div className="order-2 lg:order-1">
             <div ref={contentRef}>
-              <div className="inline-flex items-center gap-3 bg-green-500/20 text-green-300 px-6 py-3 rounded-full text-sm font-medium mb-8">
+              <div className="inline-flex items-center gap-3 bg-green-500/20 text-green-300 px-6 py-3 rounded-full text-sm font-medium mb-8 border border-green-500/30">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                 <span>STATUS: Available for work</span>
               </div>
               
               <h1 className="text-6xl lg:text-8xl font-bold mb-8 leading-tight">
-                <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Samarth</span>
+                <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">Samarth</span>
                 <span className="block text-white">Ghag</span>
               </h1>
               
@@ -100,12 +110,12 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-6 mb-16">
                 <Link 
                   to="/projects"
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 inline-flex items-center justify-center gap-3 text-lg group"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 inline-flex items-center justify-center gap-3 text-lg group shadow-lg hover:shadow-cyan-500/25"
                 >
                   <span className="font-mono">View_Projects()</span>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="bg-white/10 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-xl font-semibold hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 font-mono">
+                <button className="bg-white/10 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-xl font-semibold hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 font-mono backdrop-blur-sm">
                   <Download size={20} className="inline mr-2" />
                   Download_Resume()
                 </button>
@@ -118,7 +128,7 @@ const Hero = () => {
                     href="https://github.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
+                    className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 hover:bg-white/20 transition-all duration-300"
                   >
                     <Github size={24} />
                   </a>
@@ -126,13 +136,13 @@ const Hero = () => {
                     href="https://linkedin.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-white/70 hover:text-cyan-400 hover:scale-110 transition-all duration-300"
+                    className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl flex items-center justify-center text-white/70 hover:text-cyan-400 hover:scale-110 hover:bg-cyan-400/10 transition-all duration-300"
                   >
                     <Linkedin size={24} />
                   </a>
                   <a 
                     href="mailto:contact@samarthghag.com" 
-                    className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-white/70 hover:text-blue-400 hover:scale-110 transition-all duration-300"
+                    className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl flex items-center justify-center text-white/70 hover:text-blue-400 hover:scale-110 hover:bg-blue-400/10 transition-all duration-300"
                   >
                     <Mail size={24} />
                   </a>
