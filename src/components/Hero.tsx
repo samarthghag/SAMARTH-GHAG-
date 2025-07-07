@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Github, Linkedin, Mail, ArrowRight, Download, Sparkles, Cpu, Code2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -147,17 +146,22 @@ const Hero = () => {
                   <span className="font-mono">View Projects</span>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="glass-effect text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all duration-300 font-mono modern-shadow">
+                <a
+                  href="https://drive.google.com/file/d/1N2KXdQdUUJperVNtt8KiOVliBdmBtBPE/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-effect text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all duration-300 font-mono modern-shadow inline-flex items-center justify-center"
+                >
                   <Download size={20} className="inline mr-2" />
                   Resume
-                </button>
+                </a>
               </div>
               
               <div className="flex items-center gap-6">
                 <span className="text-sm text-blue-200 font-medium font-mono">// Connect</span>
                 <div className="flex gap-3">
                   <a 
-                    href="https://github.com" 
+                    href="https://github.com/samarthghag" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
@@ -165,7 +169,7 @@ const Hero = () => {
                     <Github size={20} />
                   </a>
                   <a 
-                    href="https://linkedin.com" 
+                    href="https://www.linkedin.com/in/samarth-ghag/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
@@ -173,7 +177,7 @@ const Hero = () => {
                     <Linkedin size={20} />
                   </a>
                   <a 
-                    href="mailto:contact@samarthghag.com" 
+                    href="mailto:samarthghag9@gmail.com" 
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
                     <Mail size={20} />
