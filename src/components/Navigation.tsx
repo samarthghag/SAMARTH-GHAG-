@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Code, Zap } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import Logo from './Logo';
@@ -19,16 +19,15 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     
-    // Nav animation
     if (navRef.current) {
       gsap.fromTo(navRef.current,
         { y: -100, opacity: 0 },
         { 
           y: 0, 
           opacity: 1, 
-          duration: 1.2, 
+          duration: 1.5, 
           ease: "power3.out", 
-          delay: 0.3 
+          delay: 0.5 
         }
       );
     }
@@ -37,11 +36,11 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Home', href: '/', icon: <Zap size={16} /> },
+    { name: 'About', href: '#about', icon: <Code size={16} /> },
+    { name: 'Projects', href: '/projects', icon: <Code size={16} /> },
+    { name: 'Experience', href: '#experience', icon: <Zap size={16} /> },
+    { name: 'Contact', href: '#contact', icon: <Code size={16} /> }
   ];
 
   const scrollToSection = (href: string) => {
@@ -63,44 +62,43 @@ const Navigation = () => {
   return (
     <nav 
       ref={navRef} 
-      className={`fixed top-0 w-full z-50 transition-all duration-700 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled 
-          ? 'bg-gray-900/90 backdrop-blur-md border-b border-white/10' 
+          ? 'glass-effect shadow-lg' 
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
+      <div className="max-w-6xl mx-auto px-4 lg:px-6">
+        <div className="flex justify-between items-center h-16">
           <Link to="/" className="group">
-            <div className="transform transition-all duration-500 group-hover:scale-110">
-              <Logo size="md" className="shadow-2xl group-hover:shadow-[0_0_30px_rgba(0,212,255,0.5)]" />
-            </div>
+            <Logo size="md" className="transition-transform duration-300 group-hover:scale-110" />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md p-2 rounded-2xl">
+            <div className="flex items-center space-x-1 glass-effect rounded-full px-2 py-2">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="px-6 py-3 text-white/70 hover:text-white font-medium transition-all duration-300 rounded-lg hover:bg-white/10 font-mono text-sm"
+                    className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/50 flex items-center gap-2 text-sm font-mono"
                   >
-                    <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
+                    {item.icon}
+                    {item.name}
                   </button>
                 ) : (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`px-6 py-3 font-medium transition-all duration-300 rounded-lg font-mono text-sm ${
+                    className={`px-4 py-2 font-medium transition-all duration-300 rounded-full flex items-center gap-2 text-sm font-mono ${
                       isActive(item.href) 
-                        ? 'text-white bg-white/20 shadow-lg' 
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                        ? 'text-slate-900 bg-white/70 shadow-sm' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
                     }`}
                   >
-                    <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
+                    {item.icon}
+                    {item.name}
                   </Link>
                 )
               ))}
@@ -110,33 +108,35 @@ const Navigation = () => {
           {/* Mobile Navigation Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
+            className="md:hidden p-2 text-slate-600 hover:text-slate-900 glass-effect rounded-xl transition-all duration-300"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div className="md:hidden bg-gray-900/95 backdrop-blur-md border-t border-white/10 rounded-b-2xl shadow-2xl m-4 mt-0">
+          <div className="md:hidden glass-effect rounded-2xl shadow-lg m-4 mt-2">
             <div className="p-4 space-y-2">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-mono"
+                    className="block w-full text-left px-4 py-3 text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-xl transition-all duration-300 font-mono flex items-center gap-2"
                   >
-                    <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
+                    {item.icon}
+                    {item.name}
                   </button>
                 ) : (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-mono"
+                    className="block px-4 py-3 text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-xl transition-all duration-300 font-mono flex items-center gap-2"
                     onClick={() => setIsOpen(false)}
                   >
-                    <span className="opacity-50">{String(index + 1).padStart(2, '0')}.</span> {item.name}
+                    {item.icon}
+                    {item.name}
                   </Link>
                 )
               ))}

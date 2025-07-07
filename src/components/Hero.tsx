@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, ArrowRight, Download, Code2, Zap } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Download, Sparkles, Cpu, Code2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 
@@ -8,61 +8,89 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const floatingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.5 });
+    const tl = gsap.timeline({ delay: 0.8 });
     
-    // Set initial states
     if (contentRef.current?.children) {
       gsap.set(contentRef.current.children, { 
         opacity: 0, 
-        y: 50
+        y: 60,
+        scale: 0.8
       });
     }
 
     if (imageRef.current) {
       gsap.set(imageRef.current, { 
         opacity: 0, 
-        y: 50
+        scale: 0.8,
+        rotation: -10
       });
     }
 
     // Animate profile image
     tl.to(imageRef.current, {
       opacity: 1,
-      y: 0,
-      duration: 1.5,
-      ease: "power3.out"
+      scale: 1,
+      rotation: 0,
+      duration: 1.2,
+      ease: "back.out(1.7)"
     })
     // Then animate content
     .to(contentRef.current?.children || [], {
       opacity: 1,
       y: 0,
-      duration: 1,
-      stagger: 0.2,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.15,
       ease: "power2.out"
-    }, "-=0.8");
+    }, "-=0.6");
+
+    // Floating animation
+    if (floatingRef.current) {
+      gsap.to(floatingRef.current, {
+        y: -20,
+        duration: 3,
+        ease: "power1.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    }
 
   }, []);
 
   return (
     <section 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900" 
+      className="min-h-screen flex items-center justify-center relative overflow-hidden" 
       ref={heroRef}
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      }}
     >
-      {/* Subtle background elements */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-800/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-700/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl floating-animation"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-white/5 rounded-full blur-3xl floating-animation" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent rotate-12"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Tech Grid Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="grid grid-cols-12 gap-4 h-full w-full p-8">
+          {Array.from({ length: 144 }).map((_, i) => (
+            <div key={i} className="border border-white/20 rounded"></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Profile Image Section */}
           <div ref={imageRef} className="flex justify-center lg:justify-end order-1 lg:order-2">
-            <div className="relative">
-              <div className="w-80 h-96 bg-gray-800/50 rounded-3xl flex items-center justify-center overflow-hidden border border-gray-700/50 shadow-2xl backdrop-blur-sm">
+            <div className="relative" ref={floatingRef}>
+              <div className="w-80 h-96 glass-effect rounded-3xl flex items-center justify-center overflow-hidden modern-shadow">
                 <img 
                   src="/lovable-uploads/17014b2d-4f0b-4cf2-b3f1-10c20fad2809.png" 
                   alt="Samarth Ghag - Software Developer"
@@ -70,14 +98,17 @@ const Hero = () => {
                 />
               </div>
               
-              {/* Tech badges with project theme */}
-              <div className="absolute -top-6 -left-6 bg-gray-800/90 border border-gray-600/50 text-gray-100 px-6 py-3 rounded-full text-sm font-bold shadow-lg backdrop-blur-sm">
-                <Code2 size={16} className="inline mr-2" />
-                AI Developer
+              {/* Floating Tech Elements */}
+              <div className="absolute -top-4 -left-4 glass-effect text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg flex items-center gap-2">
+                <Cpu size={16} className="text-blue-300" />
+                <span>AI Expert</span>
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-gray-700/90 border border-gray-600/50 text-gray-100 px-6 py-3 rounded-full text-sm font-bold shadow-lg backdrop-blur-sm">
-                <Zap size={16} className="inline mr-2" />
-                Full Stack
+              <div className="absolute -bottom-4 -right-4 glass-effect text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg flex items-center gap-2">
+                <Code2 size={16} className="text-purple-300" />
+                <span>Full Stack</span>
+              </div>
+              <div className="absolute top-1/2 -right-8 glass-effect text-white px-3 py-3 rounded-full shadow-lg">
+                <Sparkles size={20} className="text-yellow-300" />
               </div>
             </div>
           </div>
@@ -85,65 +116,65 @@ const Hero = () => {
           {/* Content Section */}
           <div className="order-2 lg:order-1">
             <div ref={contentRef}>
-              <div className="inline-flex items-center gap-3 bg-green-500/20 text-green-300 px-6 py-3 rounded-full text-sm font-medium mb-8 border border-green-500/30">
+              <div className="inline-flex items-center gap-3 glass-effect text-green-300 px-6 py-3 rounded-full text-sm font-bold mb-8 border border-green-400/30">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                <span>STATUS: Available for work</span>
+                <span className="font-mono">STATUS: AVAILABLE</span>
               </div>
               
-              <h1 className="text-6xl lg:text-8xl font-bold mb-8 leading-tight">
-                <span className="block text-gray-100">Samarth</span>
-                <span className="block text-gray-300">Ghag</span>
+              <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight text-white">
+                <span className="block">Samarth</span>
+                <span className="block text-blue-200">Ghag</span>
               </h1>
               
-              <div className="text-2xl lg:text-3xl text-gray-400 mb-4 font-light font-mono">
+              <div className="text-xl lg:text-2xl text-blue-100 mb-4 font-mono typewriter">
                 &lt; Software Developer /&gt;
               </div>
               
-              <p className="text-lg text-gray-300 mb-12 max-w-xl leading-relaxed">
-                Crafting intelligent solutions with <span className="text-gray-100 font-semibold">AI</span>, 
-                robust <span className="text-gray-100 font-semibold">cybersecurity</span>, and 
-                cutting-edge <span className="text-gray-100 font-semibold">full-stack development</span>. 
+              <p className="text-lg text-white/90 mb-12 max-w-xl leading-relaxed">
+                Crafting intelligent solutions with <span className="text-blue-200 font-semibold">AI</span>, 
+                robust <span className="text-purple-200 font-semibold">cybersecurity</span>, and 
+                cutting-edge <span className="text-green-200 font-semibold">full-stack development</span>. 
                 Transforming ideas into scalable digital experiences.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 mb-16">
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <Link 
                   to="/projects"
-                  className="bg-gray-800 border border-gray-600 text-gray-100 px-8 py-4 rounded-xl font-semibold hover:bg-gray-700 hover:border-gray-500 transition-all duration-300 inline-flex items-center justify-center gap-3 text-lg group shadow-lg"
+                  className="tech-gradient text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 inline-flex items-center justify-center gap-3 text-lg group modern-shadow"
                 >
-                  <span className="font-mono">View_Projects()</span>
+                  <span className="font-mono">View Projects</span>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="bg-gray-900/50 border border-gray-600/50 text-gray-300 px-8 py-4 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500/50 transition-all duration-300 font-mono backdrop-blur-sm">
+                <button className="glass-effect text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all duration-300 font-mono modern-shadow">
                   <Download size={20} className="inline mr-2" />
-                  Download_Resume()
+                  Resume
                 </button>
               </div>
               
-              <div className="flex items-center gap-8">
-                <span className="text-sm text-gray-500 font-medium font-mono">// Connect with me</span>
-                <div className="flex gap-4">
+              <div className="flex items-center gap-6">
+                <span className="text-sm text-blue-200 font-medium font-mono">// Connect</span>
+                <div className="flex gap-3">
                   <a 
                     href="https://github.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="w-14 h-14 bg-gray-800/50 backdrop-blur-sm border border-gray-600/50 rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-100 hover:scale-110 hover:bg-gray-700/50 transition-all duration-300"
+                    className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
-                    <Github size={24} />
+                    <Github size={20} />
                   </a>
                   <a 
                     href="https://linkedin.com" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="w-14 h-14 bg-gray-800/50 backdrop-blur-sm border border-gray-600/50 rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-100 hover:scale-110 hover:bg-gray-700/50 transition-all duration-300"
+                    className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
-                    <Linkedin size={24} />
+                    <Linkedin size={20} />
                   </a>
                   <a 
                     href="mailto:contact@samarthghag.com" 
-                    className="w-14 h-14 bg-gray-800/50 backdrop-blur-sm border border-gray-600/50 rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-100 hover:scale-110 hover:bg-gray-700/50 transition-all duration-300"
+                    className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
-                    <Mail size={24} />
+                    <Mail size={20} />
                   </a>
                 </div>
               </div>
