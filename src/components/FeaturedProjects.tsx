@@ -81,16 +81,16 @@ const FeaturedProjects = () => {
             <Sparkles size={16} />
             <span className="font-mono">FEATURED_WORK</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6 font-mono">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6 font-mono">
             Best Projects
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto px-4">
             A curated selection of my most impactful work showcasing innovation in AI, 
             full-stack development, and system architecture.
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div ref={cardsRef} className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
           {featuredProjects.map((project, index) => (
             <ProjectCard key={index} {...project} />
           ))}

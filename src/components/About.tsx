@@ -79,17 +79,17 @@ const About = () => {
             <Brain size={16} />
             <span className="font-mono">ABOUT_ME.exe</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6 font-mono">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6 font-mono">
             Creative Technologist
           </h2>
-          <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed px-4">
             Passionate software developer and entrepreneur pursuing Bachelor's in Computer Application 
             at Christ University, Bangalore. Bridging the gap between innovative technology and 
             strategic business solutions.
           </p>
         </div>
 
-        <div ref={contentRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div ref={contentRef} className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
           {highlights.map((item, index) => (
             <div key={index} className="highlight-card group">
               <div className="glass-effect rounded-3xl p-8 h-full hover:shadow-2xl transition-all duration-500 border border-white/20 relative overflow-hidden">
@@ -112,16 +112,16 @@ const About = () => {
           ))}
         </div>
 
-        <div className="glass-effect rounded-3xl p-12 modern-shadow border border-white/20 relative overflow-hidden">
+        <div className="glass-effect rounded-3xl p-6 md:p-12 modern-shadow border border-white/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-center gap-3 mb-8">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-white">
                 <Target size={20} />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 font-mono">My Journey</h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono">My Journey</h3>
             </div>
-            <p className="text-slate-600 leading-relaxed text-lg text-center max-w-4xl mx-auto">
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base md:text-lg text-center max-w-4xl mx-auto px-4">
               From graphic design intern to Chief of Staff, my career has been driven by curiosity and innovation. 
               I've founded <span className="font-bold text-blue-600">Vault Vortex</span>, a fintech platform, developed AI-powered applications, 
               and led technical projects across various domains. My mission is to create technology solutions that 
