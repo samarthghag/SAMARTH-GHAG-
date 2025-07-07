@@ -17,7 +17,7 @@ const Projects = () => {
       description: "An innovative quiz-style driving game where players dodge obstacles while answering engineering prompts, combining entertainment with education.",
       tech: ["Python", "Pygame"],
       image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=250&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/Prompt-Dodge",
       demo: "#"
     },
     {
@@ -25,7 +25,7 @@ const Projects = () => {
       description: "Real-time weather application providing comprehensive weather data for any city using OpenWeatherMap API integration.",
       tech: ["Java Servlet", "HTML/CSS", "API Integration"],
       image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=250&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/Weather_App",
       demo: "#"
     },
     {
@@ -33,7 +33,7 @@ const Projects = () => {
       description: "Comprehensive event platform with creation tools, attendee tracking, and admin approval workflow for seamless event coordination.",
       tech: ["Java", "Swing", "MySQL"],
       image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop",
-      github: "#",
+      github: "",
       demo: "#"
     },
     {

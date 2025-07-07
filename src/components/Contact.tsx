@@ -37,7 +37,7 @@ const Contact = () => {
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           <a 
-            href="https://github.com" 
+            href="https://github.com/samarthghag" 
             target="_blank" 
             rel="noopener noreferrer"
             className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
@@ -50,7 +50,7 @@ const Contact = () => {
           </a>
 
           <a 
-            href="https://linkedin.com" 
+            href="https://www.linkedin.com/in/samarth-ghag/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
@@ -63,7 +63,7 @@ const Contact = () => {
           </a>
 
           <a 
-            href="mailto:contact@samarthghag.com"
+            href="mailto:samarthghag9@gmail.com"
             className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
           >
             <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
@@ -86,7 +86,7 @@ const Contact = () => {
               let's transform your ideas into reality.
             </p>
             <a 
-              href="mailto:contact@samarthghag.com"
+              href="mailto:samarthghag9@gmail.com"
               className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 text-lg group modern-shadow"
             >
               <Send size={20} />
