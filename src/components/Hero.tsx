@@ -84,13 +84,13 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Profile Image Section */}
           <div ref={imageRef} className="flex justify-center lg:justify-end order-1 lg:order-2">
             <div className="relative" ref={floatingRef}>
-              <div className="w-80 h-96 glass-effect rounded-3xl flex items-center justify-center overflow-hidden modern-shadow">
+              <div className="w-64 h-80 sm:w-72 sm:h-84 md:w-80 md:h-96 glass-effect rounded-3xl flex items-center justify-center overflow-hidden modern-shadow">
                 <img 
                   src="/lovable-uploads/17014b2d-4f0b-4cf2-b3f1-10c20fad2809.png" 
                   alt="Samarth Ghag - Software Developer"
@@ -98,18 +98,20 @@ const Hero = () => {
                 />
               </div>
               
-              {/* Floating Tech Elements */}
-              <div className="absolute -top-4 -left-4 glass-effect text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg flex items-center gap-2">
-                <Cpu size={16} className="text-blue-300" />
-                <span>AI Expert</span>
-              </div>
-              <div className="absolute -bottom-4 -right-4 glass-effect text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg flex items-center gap-2">
-                <Code2 size={16} className="text-purple-300" />
-                <span>Full Stack</span>
-              </div>
-              <div className="absolute top-1/2 -right-8 glass-effect text-white px-3 py-3 rounded-full shadow-lg">
-                <Sparkles size={20} className="text-yellow-300" />
-              </div>
+               {/* Floating Tech Elements */}
+               <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 glass-effect text-white px-2 sm:px-4 py-1 sm:py-2 rounded-2xl text-xs sm:text-sm font-bold shadow-lg flex items-center gap-1 sm:gap-2">
+                 <Cpu size={12} className="text-blue-300 sm:w-4 sm:h-4" />
+                 <span className="hidden sm:inline">AI Expert</span>
+                 <span className="sm:hidden">AI</span>
+               </div>
+               <div className="absolute -bottom-2 sm:-bottom-4 -right-2 sm:-right-4 glass-effect text-white px-2 sm:px-4 py-1 sm:py-2 rounded-2xl text-xs sm:text-sm font-bold shadow-lg flex items-center gap-1 sm:gap-2">
+                 <Code2 size={12} className="text-purple-300 sm:w-4 sm:h-4" />
+                 <span className="hidden sm:inline">Full Stack</span>
+                 <span className="sm:hidden">Dev</span>
+               </div>
+               <div className="absolute top-1/2 -right-4 sm:-right-8 glass-effect text-white px-2 sm:px-3 py-2 sm:py-3 rounded-full shadow-lg">
+                 <Sparkles size={16} className="text-yellow-300 sm:w-5 sm:h-5" />
+               </div>
             </div>
           </div>
 
@@ -121,16 +123,16 @@ const Hero = () => {
                 <span className="font-mono">STATUS: AVAILABLE</span>
               </div>
               
-              <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight text-white">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight text-white">
                 <span className="block">Samarth</span>
                 <span className="block text-blue-200">Ghag</span>
               </h1>
               
-              <div className="text-xl lg:text-2xl text-blue-100 mb-4 font-mono typewriter">
+              <div className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-4 font-mono typewriter">
                 &lt; Software Developer /&gt;
               </div>
               
-              <p className="text-lg text-white/90 mb-12 max-w-xl leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-white/90 mb-8 sm:mb-12 max-w-xl leading-relaxed">
                 Crafting intelligent solutions with <span className="text-blue-200 font-semibold">AI</span>, 
                 robust <span className="text-purple-200 font-semibold">cybersecurity</span>, and 
                 cutting-edge <span className="text-green-200 font-semibold">full-stack development</span>. 
