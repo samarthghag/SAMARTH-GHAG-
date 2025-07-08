@@ -14,7 +14,7 @@ const Experience = () => {
       title: "Co-Founder and CTO",
       company: "College Circle",
       period: "Apr 2025 – Present",
-      description: "Co-Founder and CTO at College Circle. Leading the technical vision and product development for a fast-growing educational platform. Overseeing engineering teams, driving innovation, and ensuring robust, scalable solutions for students and institutions.",
+      description: "Leading the technical vision and product development for a fast-growing educational platform. Overseeing engineering teams, driving innovation, and ensuring robust, scalable solutions for students and institutions.",
       current: true,
       type: "Leadership",
       color: "from-indigo-500 to-blue-500"
