@@ -14,28 +14,28 @@ const FeaturedProjects = () => {
 
   const featuredProjects = [
     {
-      title: "Clickbait Creator",
-      description: "AI-powered content generator leveraging Google AI API to create engaging clickbait titles with intelligent optimization and real-time analytics.",
-      tech: ["Flask", "Google AI API", "Python", "Machine Learning"],
+      title: "Multi-Agent Code Writing System",
+      description: "A multi-agent system for collaborative code writing using LangGraph and Gemini API with five specialized agents for orchestration, planning, coding, testing, and checking.",
+      tech: ["Python", "LangGraph", "LangChain", "Gemini API", "Multi-Agent"],
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
       github: "#",
       demo: "#",
       featured: true
     },
     {
-      title: "Smart Home Management",
-      description: "IoT control system for smart devices with integrated shopping features, comprehensive user account management, and real-time monitoring.",
-      tech: ["Node.js", "Express.js", "IoT", "React"],
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+      title: "Finance Savvy Journey",
+      description: "Comprehensive financial management platform with expense tracking, financial education resources, and paper trading simulator for investment practice.",
+      tech: ["React", "TypeScript", "Supabase", "Tailwind CSS", "React Query"],
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
       github: "#",
       demo: "#",
       featured: true
     },
     {
-      title: "Event Management System",
-      description: "Comprehensive event platform with creation tools, attendee tracking, admin approval workflow, and automated notification system.",
-      tech: ["Java", "Swing", "MySQL", "Spring Boot"],
-      image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=400&fit=crop",
+      title: "Eco-Tech Start Website",
+      description: "Modern eco-business website featuring smooth scroll animations, interactive elements, and integrated contact forms with sustainable design principles.",
+      tech: ["HTML", "CSS", "JavaScript", "Animation"],
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop",
       github: "#",
       demo: "#",
       featured: true
