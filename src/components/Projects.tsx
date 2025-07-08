@@ -41,15 +41,15 @@ const Projects = () => {
       description: "IoT control system for smart devices with integrated shopping features and comprehensive user account management.",
       tech: ["Node.js", "Express.js", "EJS"],
       image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Smart-Home-Management-Website",
+      demo: "https://smart-home-management-website.vercel.app/"
     },
     {
       title: "Clickbait Creator",
       description: "AI-powered content generator leveraging Google AI API to create engaging clickbait titles with intelligent optimization.",
       tech: ["Flask", "Google AI API", "HTML/CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/Clickbait-Creator",
       demo: "#"
     },
     {
@@ -57,24 +57,24 @@ const Projects = () => {
       description: "Advanced scheduling system applying OS algorithms to optimize financial workflows and task management processes.",
       tech: ["Python", "Streamlit", "Algorithm Design"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Financial-Task-Scheduler",
+      demo: "https://financial-task-scheduler-w8r7eecgrgru2rl49g4mcb.streamlit.app/"
     },
     {
       title: "Eco-Tech Start Website",
       description: "Modern eco-business website featuring smooth scroll animations, interactive elements, and integrated contact forms.",
       tech: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Eco-Tech-Start-Website",
+      demo: "https://eco-tech-start-website.vercel.app/"
     },
     {
       title: "Diwali Celebration App",
       description: "Interactive festive greeting application with beautiful animations, personalization features, and cultural elements.",
       tech: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=250&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Diwali-Celebration",
+      demo: "https://diwali-celebration.vercel.app/"
     }
   ];
 

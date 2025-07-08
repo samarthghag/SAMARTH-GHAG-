@@ -18,7 +18,7 @@ const FeaturedProjects = () => {
       description: "A multi-agent system for collaborative code writing using LangGraph and Gemini API with five specialized agents for orchestration, planning, coding, testing, and checking.",
       tech: ["Python", "LangGraph", "LangChain", "Gemini API", "Multi-Agent"],
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/AI-Agents",
       demo: "#",
       featured: true
     },
@@ -27,8 +27,8 @@ const FeaturedProjects = () => {
       description: "Comprehensive financial management platform with expense tracking, financial education resources, and paper trading simulator for investment practice.",
       tech: ["React", "TypeScript", "Supabase", "Tailwind CSS", "React Query"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#",
+      github: "https://github.com/samarthghag/finance-savvy-journey",
+      demo: "https://finance-savvy-journey.vercel.app/",
       featured: true
     },
     {
@@ -36,8 +36,8 @@ const FeaturedProjects = () => {
       description: "Modern eco-business website featuring smooth scroll animations, interactive elements, and integrated contact forms with sustainable design principles.",
       tech: ["HTML", "CSS", "JavaScript", "Animation"],
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#",
+      github: "https://github.com/samarthghag/Eco-Tech-Start-Website",
+      demo: "https://eco-tech-start-website.vercel.app/",
       featured: true
     }
   ];
