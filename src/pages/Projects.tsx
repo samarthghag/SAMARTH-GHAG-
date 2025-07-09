@@ -14,7 +14,7 @@ const Projects = () => {
       description: "A multi-agent system for collaborative code writing using LangGraph and Gemini API with five specialized agents for orchestration, planning, coding, testing, and checking.",
       tech: ["Python", "LangGraph", "LangChain", "Gemini API", "Multi-Agent"],
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/AI-Agents",
       demo: "#"
     },
     {
@@ -22,24 +22,24 @@ const Projects = () => {
       description: "Comprehensive financial management platform with expense tracking, financial education resources, and paper trading simulator for investment practice.",
       tech: ["React", "TypeScript", "Supabase", "Tailwind CSS", "React Query"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/finance-savvy-journey",
+      demo: "https://finance-savvy-journey.vercel.app/"
     },
     {
       title: "Groovy Cart Cascade",
       description: "Modern, full-stack e-commerce platform with React, TypeScript, and Supabase. Features real-time cart management, user authentication, and seamless shopping experience.",
       tech: ["React", "TypeScript", "Supabase", "Tailwind CSS", "shadcn/ui"],
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/groovy-cart-cascade",
+      demo: "https://groovy-cart-cascade.vercel.app/"
     },
     {
       title: "Eco-Tech Start Website",
       description: "Modern eco-business website featuring smooth scroll animations, interactive elements, and integrated contact forms with sustainable design principles.",
       tech: ["HTML", "CSS", "JavaScript", "Animation"],
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Eco-Tech-Start-Website",
+      demo: "https://eco-tech-start-website.vercel.app/"
     },
     {
       title: "Prompt Dodge Game",
@@ -62,7 +62,7 @@ const Projects = () => {
       description: "Comprehensive event platform with creation tools, attendee tracking, and admin approval workflow for seamless event coordination.",
       tech: ["Java", "Swing", "MySQL"],
       image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=400&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/Event_Management_System",
       demo: "#"
     },
     {
@@ -70,15 +70,15 @@ const Projects = () => {
       description: "IoT control system for smart devices with integrated shopping features and comprehensive user account management.",
       tech: ["Node.js", "Express.js", "EJS"],
       image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Smart-Home-Management-Website",
+      demo: "https://smart-home-management-website.vercel.app/"
     },
     {
       title: "Clickbait Creator",
       description: "AI-powered content generator leveraging Google AI API to create engaging clickbait titles with intelligent optimization.",
       tech: ["Flask", "Google AI API", "HTML/CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-      github: "#",
+      github: "https://github.com/samarthghag/Clickbait-Creator",
       demo: "#"
     },
     {
@@ -86,16 +86,16 @@ const Projects = () => {
       description: "Advanced scheduling system applying OS algorithms to optimize financial workflows and task management processes.",
       tech: ["Python", "Streamlit", "Algorithm Design"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      github: "#",
-      demo: "#"
+      github: "https://github.com/samarthghag/Financial-Task-Scheduler",
+      demo: "https://financial-task-scheduler-w8r7eecgrgru2rl49g4mcb.streamlit.app/"
     },
     {
       title: "Diwali Celebration App",
       description: "Interactive festive greeting application with beautiful animations, personalization features, and cultural elements.",
       tech: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
-      github: "#", // TODO: Replace with actual GitHub URL if available
-      demo: "#"
+      github: "https://github.com/samarthghag/Diwali-Celebration", // TODO: Replace with actual GitHub URL if available
+      demo: "https://diwali-celebration.vercel.app/"
     }
   ];
 
