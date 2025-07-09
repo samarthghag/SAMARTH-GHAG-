@@ -94,7 +94,7 @@ const Projects = () => {
       description: "Interactive festive greeting application with beautiful animations, personalization features, and cultural elements.",
       tech: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
-      github: "#",
+      github: "#", // TODO: Replace with actual GitHub URL if available
       demo: "#"
     }
   ];

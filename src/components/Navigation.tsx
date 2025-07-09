@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Code, Zap } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import Logo from './Logo';
 
@@ -10,6 +10,7 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,12 +46,17 @@ const Navigation = () => {
 
   const scrollToSection = (href: string) => {
     if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      if (location.pathname !== '/') {
+        // Go to home and pass section to scroll to
+        navigate('/', { state: { scrollTo: href } });
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
+      setIsOpen(false);
     }
-    setIsOpen(false);
   };
 
   const isActive = (href: string) => {
