@@ -147,7 +147,7 @@ const Hero = () => {
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <a
-                  href="https://drive.google.com/file/d/1v5uzJpsjtR9MNbWhPAJrlopVgHawU9oL/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1XOKuoKAruee00OcYLBLTU6xVRlCuYhB5/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glass-effect text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all duration-300 font-mono modern-shadow inline-flex items-center justify-center"
