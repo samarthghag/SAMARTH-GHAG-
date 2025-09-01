@@ -10,6 +10,14 @@ const Projects = () => {
 
   const allProjects = [
     {
+      title: "NLP Labs 1-7: Comprehensive Pipeline",
+      description: "Complete Natural Language Processing pipeline covering 7 labs: tokenization, POS tagging, multilingual support, WordNet, n-grams, discourse analysis, and lemmatization with text generation.",
+      tech: ["Python", "NLTK", "spaCy", "NLP", "WordNet", "Linguistics"],
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
+      github: "https://github.com/samarthghag/SAMARTH-GHAG-/tree/main/nlp-labs",
+      demo: "#"
+    },
+    {
       title: "Multi-Agent Code Writing System",
       description: "A multi-agent system for collaborative code writing using LangGraph and Gemini API with five specialized agents for orchestration, planning, coding, testing, and checking.",
       tech: ["Python", "LangGraph", "LangChain", "Gemini API", "Multi-Agent"],

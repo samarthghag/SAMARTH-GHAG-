@@ -1,0 +1,13 @@
+nltk>=3.8.1
+spacy>=3.7.0
+collections-extended>=2.0.0
+
+# Required models for spaCy
+# Run: python -m spacy download en_core_web_sm
+
+# NLTK data downloads (handled automatically in code):
+# - punkt
+# - stopwords  
+# - wordnet
+# - averaged_perceptron_tagger
+# - omw-1.4

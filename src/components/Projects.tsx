@@ -13,6 +13,14 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "NLP Labs 1-7: Comprehensive Pipeline",
+      description: "Complete Natural Language Processing pipeline covering 7 labs: tokenization, POS tagging, multilingual support, WordNet, n-grams, discourse analysis, and lemmatization with text generation.",
+      tech: ["Python", "NLTK", "spaCy", "NLP", "WordNet"],
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop",
+      github: "https://github.com/samarthghag/SAMARTH-GHAG-/tree/main/nlp-labs",
+      demo: "#"
+    },
+    {
       title: "Prompt Dodge Game",
       description: "An innovative quiz-style driving game where players dodge obstacles while answering engineering prompts, combining entertainment with education.",
       tech: ["Python", "Pygame"],
