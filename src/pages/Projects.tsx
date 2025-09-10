@@ -94,7 +94,7 @@ const Projects = () => {
       description: "Interactive festive greeting application with beautiful animations, personalization features, and cultural elements.",
       tech: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
-      github: "https://github.com/samarthghag/Diwali-Celebration", // TODO: Replace with actual GitHub URL if available
+      github: "https://github.com/samarthghag/Diwali-Celebration", 
       demo: "https://diwali-celebration.vercel.app/"
     }
   ];
@@ -124,7 +124,7 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+      <main id="main">
       <div className="pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div ref={headerRef} className="text-center mb-16">
@@ -144,6 +144,7 @@ const Projects = () => {
           </div>
         </div>
       </div>
+      </main>
     </div>
   );
 };

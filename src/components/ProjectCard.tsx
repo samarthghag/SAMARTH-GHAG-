@@ -28,6 +28,8 @@ const ProjectCard = ({ title, description, tech, image, github, demo, featured }
           <img 
             src={image} 
             alt={title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -36,12 +38,16 @@ const ProjectCard = ({ title, description, tech, image, github, demo, featured }
           <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <a 
               href={github} 
+              target="_blank" rel="noopener noreferrer"
+              aria-label={`Open ${title} on GitHub`}
               className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
             >
               <Github size={20} />
             </a>
             <a 
               href={demo} 
+              target="_blank" rel="noopener noreferrer"
+              aria-label={`Open live demo for ${title}`}
               className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
             >
               <ExternalLink size={20} />
@@ -76,20 +82,25 @@ const ProjectCard = ({ title, description, tech, image, github, demo, featured }
           <div className="flex justify-between items-center mt-auto">
             <div className="flex gap-3">
               <a 
-                href={github} 
+                href={github}
+                target="_blank" rel="noopener noreferrer"
+                aria-label={`Open ${title} on GitHub`}
                 className="text-slate-500 hover:text-slate-700 transition-colors duration-300"
               >
                 <Github size={16} />
               </a>
               <a 
-                href={demo} 
+                href={demo}
+                target="_blank" rel="noopener noreferrer"
+                aria-label={`Open live demo for ${title}`}
                 className="text-slate-500 hover:text-slate-700 transition-colors duration-300"
               >
                 <ExternalLink size={16} />
               </a>
             </div>
             <a 
-              href={demo} 
+              href={demo}
+              target="_blank" rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 font-bold text-xs font-mono transition-colors duration-300"
             >
               View Project →
