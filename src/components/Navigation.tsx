@@ -36,19 +36,6 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu with Escape key for accessibility
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) {
-      window.addEventListener('keydown', onKeyDown);
-    }
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen]);
-
   const navItems = [
     { name: 'Home', href: '/', icon: <Zap size={16} /> },
     { name: 'About', href: '#about', icon: <Code size={16} /> },
@@ -79,11 +66,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav
-      ref={navRef}
-      aria-label="Primary"
+    <nav 
+      ref={navRef} 
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'glass-effect shadow-lg' : 'bg-transparent'
+        scrolled 
+          ? 'glass-effect shadow-lg' 
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 lg:px-6">
@@ -95,11 +83,10 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
             <div className="flex items-center space-x-1 glass-effect rounded-full px-2 py-2">
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
-                    type="button"
                     onClick={() => scrollToSection(item.href)}
                     className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/50 flex items-center gap-2 text-sm font-mono"
                   >
@@ -110,10 +97,9 @@ const Navigation = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    aria-current={isActive(item.href) ? 'page' : undefined}
                     className={`px-4 py-2 font-medium transition-all duration-300 rounded-full flex items-center gap-2 text-sm font-mono ${
-                      isActive(item.href)
-                        ? 'text-slate-900 bg-white/70 shadow-sm'
+                      isActive(item.href) 
+                        ? 'text-slate-900 bg-white/70 shadow-sm' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
                     }`}
                   >
@@ -127,10 +113,6 @@ const Navigation = () => {
 
           {/* Mobile Navigation Toggle */}
           <button
-            type="button"
-            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={isOpen}
-            aria-controls="mobile-nav"
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-slate-600 hover:text-slate-900 glass-effect rounded-xl transition-all duration-300"
           >
@@ -140,13 +122,12 @@ const Navigation = () => {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div id="mobile-nav" className="md:hidden glass-effect rounded-2xl shadow-lg m-4 mt-2">
+          <div className="md:hidden glass-effect rounded-2xl shadow-lg m-4 mt-2">
             <div className="p-4 space-y-2">
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <button
                     key={item.name}
-                    type="button"
                     onClick={() => scrollToSection(item.href)}
                     className="block w-full text-left px-4 py-3 text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-xl transition-all duration-300 font-mono flex items-center gap-2"
                   >

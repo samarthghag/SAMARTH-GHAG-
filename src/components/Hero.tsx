@@ -164,7 +164,6 @@ const Hero = () => {
                     href="https://github.com/samarthghag" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    aria-label="GitHub profile"
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
                     <Github size={20} />
@@ -173,14 +172,12 @@ const Hero = () => {
                     href="https://www.linkedin.com/in/samarth-ghag/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    aria-label="LinkedIn profile"
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
                     <Linkedin size={20} />
                   </a>
                   <a 
                     href="mailto:samarthghag9@gmail.com" 
-                    aria-label="Send email"
                     className="w-12 h-12 glass-effect rounded-2xl flex items-center justify-center text-white/70 hover:text-white hover:scale-110 transition-all duration-300"
                   >
                     <Mail size={20} />
