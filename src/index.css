@@ -3,55 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Orbitron:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    /* Royal Dark Theme - Deep Navy & Gold */
-    --background: 222 47% 11%;
-    --foreground: 47 100% 90%;
-    --card: 224 35% 15%;
-    --card-foreground: 47 100% 88%;
-    --popover: 224 35% 15%;
-    --popover-foreground: 47 100% 88%;
-    
-    /* Royal Primary - Deep Navy Blue */
-    --primary: 222 100% 25%;
-    --primary-foreground: 47 100% 95%;
-    --primary-glow: 222 70% 35%;
-    
-    /* Royal Secondary - Rich Gold */
-    --secondary: 45 100% 65%;
-    --secondary-foreground: 222 47% 11%;
-    
-    /* Accent - Royal Purple */
-    --accent: 261 70% 45%;
-    --accent-foreground: 47 100% 95%;
-    
-    /* Royal Muted */
-    --muted: 222 35% 20%;
-    --muted-foreground: 210 20% 70%;
-    
-    /* Destructive */
-    --destructive: 0 84% 60%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 220 100% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    
-    /* Borders & Inputs */
-    --border: 222 25% 25%;
-    --input: 222 25% 25%;
-    --ring: 45 100% 65%;
-    
-    /* Royal Gradients */
-    --gradient-royal: linear-gradient(135deg, hsl(222 100% 25%), hsl(261 70% 45%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 65%), hsl(35 100% 55%));
-    --gradient-background: linear-gradient(135deg, hsl(222 47% 11%), hsl(222 35% 15%));
-    
-    /* Royal Shadows */
-    --shadow-royal: 0 25px 50px -12px hsl(222 100% 25% / 0.4);
-    --shadow-gold: 0 10px 30px -10px hsl(45 100% 65% / 0.3);
-    --shadow-elegant: 0 20px 40px -15px hsl(222 47% 11% / 0.6);
-    
-    --radius: 0.75rem;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
   }
 
   * {
@@ -60,27 +35,16 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Crimson Text', Georgia, serif;
-    font-feature-settings: 'liga', 'kern';
-    background: var(--gradient-background);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
-    font-weight: 400;
-    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-  
-  .font-royal {
-    font-family: 'Playfair Display', Georgia, serif;
-  }
-  
-  .font-elegant {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
   }
 
   code, pre, .font-mono {
@@ -101,38 +65,26 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gradient-royal);
+  background: linear-gradient(45deg, #667eea, #764ba2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gradient-gold);
+  background: linear-gradient(45deg, #5a67d8, #6b46c1);
 }
 
 .glass-effect {
-  background: rgba(45, 55, 72, 0.3);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(234, 179, 8, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.royal-gradient {
-  background: var(--gradient-royal);
+.tech-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.gold-gradient {
-  background: var(--gradient-gold);
-}
-
-.royal-shadow {
-  box-shadow: var(--shadow-royal);
-}
-
-.gold-shadow {
-  box-shadow: var(--shadow-gold);
-}
-
-.elegant-shadow {
-  box-shadow: var(--shadow-elegant);
+.modern-shadow {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .floating-animation {
@@ -146,10 +98,10 @@ html {
 
 .typewriter {
   overflow: hidden;
-  border-right: .15em solid hsl(var(--secondary));
+  border-right: .15em solid #667eea;
   white-space: nowrap;
   margin: 0 auto;
-  letter-spacing: .1em;
+  letter-spacing: .15em;
   animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
 }
 
@@ -160,33 +112,24 @@ html {
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: hsl(var(--secondary)); }
+  50% { border-color: #667eea; }
 }
 
-/* Royal Button Variants */
-.btn-royal {
-  background: var(--gradient-royal);
-  color: hsl(var(--primary-foreground));
-  border: 1px solid hsl(var(--primary-glow));
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Accessibility: honor reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.btn-royal:hover {
-  background: var(--gradient-gold);
-  color: hsl(var(--secondary-foreground));
-  box-shadow: var(--shadow-gold);
-  transform: translateY(-2px);
-}
-
-.btn-outline-royal {
-  background: transparent;
-  color: hsl(var(--secondary));
-  border: 2px solid hsl(var(--secondary));
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-outline-royal:hover {
-  background: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
-  box-shadow: var(--shadow-gold);
+/* Improve focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid #6366f1; /* indigo-500 */
+  outline-offset: 2px;
 }

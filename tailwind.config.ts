@@ -26,8 +26,7 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
+					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -63,22 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
-			},
-			fontFamily: {
-				royal: ['Playfair Display', 'Georgia', 'serif'],
-				elegant: ['Montserrat', 'sans-serif'],
-				serif: ['Crimson Text', 'Georgia', 'serif'],
-				mono: ['JetBrains Mono', 'monospace']
-			},
-			backgroundImage: {
-				'royal-gradient': 'var(--gradient-royal)',
-				'gold-gradient': 'var(--gradient-gold)',
-				'background-gradient': 'var(--gradient-background)'
-			},
-			boxShadow: {
-				'royal': 'var(--shadow-royal)',
-				'gold': 'var(--shadow-gold)',
-				'elegant': 'var(--shadow-elegant)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
