@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ExternalLink, Github, Star } from 'lucide-react';
+import { ExternalLink, Github, Code, Star } from 'lucide-react';
 
 interface ProjectCardProps {
   title: string;
@@ -10,105 +10,123 @@ interface ProjectCardProps {
   github: string;
   demo: string;
   featured?: boolean;
+  metrics?: {
+    stars?: number;
+    commits?: number;
+    year?: string;
+    status?: 'active' | 'completed' | 'archived';
+  };
 }
 
-const ProjectCard = ({ title, description, tech, image, github, demo, featured }: ProjectCardProps) => {
+const ProjectCard = ({ title, description, tech, image, github, demo, featured, metrics }: ProjectCardProps) => {
   return (
-    <div className="group relative overflow-hidden h-full">
-      {/* Featured badge */}
-      {featured && (
-        <div className="absolute top-4 left-4 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-          <Star size={12} />
-          FEATURED
+  <article className="group eb-card overflow-hidden flex flex-col w-full h-full min-h-[500px] sm:min-h-[540px]">
+      <div className="relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a121e]/95 via-[#0a121e]/15 to-transparent" />
+        <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-white/70">
+          {featured && (
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#6c5ce7]/40 px-3 py-1 border border-[#6c5ce7]/60">
+              <Star size={14} className="text-[#f6d365]" />
+              Featured
+            </span>
+          )}
+          {metrics?.year && (
+            <span className="rounded-full bg-white/10 px-3 py-1 border border-white/20">{metrics.year}</span>
+          )}
         </div>
-      )}
-
-      <div className="glass-effect rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 border border-white/20 group-hover:scale-105 modern-shadow h-full flex flex-col">
-        <div className="aspect-video overflow-hidden relative flex-shrink-0">
-          <img 
-            src={image} 
-            alt={title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
-          {/* Hover overlay with links */}
-          <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <a 
-              href={github} 
-              target="_blank" rel="noopener noreferrer"
-              aria-label={`Open ${title} on GitHub`}
-              className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
-            >
-              <Github size={20} />
-            </a>
-            <a 
-              href={demo} 
-              target="_blank" rel="noopener noreferrer"
+        <div className="absolute bottom-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${title} on GitHub`}
+            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors"
+          >
+            <Github size={16} />
+          </a>
+          {demo && demo !== '#' && (
+            <a
+              href={demo}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={`Open live demo for ${title}`}
-              className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
+              className="w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors"
             >
-              <ExternalLink size={20} />
+              <ExternalLink size={16} />
             </a>
-          </div>
+          )}
         </div>
-        
-        <div className="p-6 flex flex-col flex-grow">
-          <h3 className="text-lg font-bold text-slate-800 mb-3 font-mono group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
+      </div>
+
+      <div className="p-7 flex flex-col gap-6 flex-1">
+        <div className="space-y-3">
+          <h3 className="text-white text-xl font-semibold leading-snug group-hover:text-[#9f95ff] transition-colors">
             {title}
           </h3>
-          <p className="text-slate-600 mb-4 leading-relaxed text-sm flex-grow line-clamp-3">
+          <p className="text-white/60 text-sm leading-relaxed line-clamp-4">
             {description}
           </p>
-          
-          <div className="flex flex-wrap gap-2 mb-4">
-            {tech.slice(0, 4).map((techItem, index) => (
-              <span 
-                key={index} 
-                className="bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 px-2 py-1 rounded-full text-xs font-bold border border-slate-300/50"
+        </div>
+
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-white/40">
+            <Code size={14} /> Stack
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {tech.slice(0, 5).map((item) => (
+              <span
+                key={item}
+                className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/70 text-xs uppercase tracking-[0.2em]"
               >
-                {techItem}
+                {item}
               </span>
             ))}
-            {tech.length > 4 && (
-              <span className="bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 px-2 py-1 rounded-full text-xs font-bold border border-slate-300/50">
-                +{tech.length - 4}
+            {tech.length > 5 && (
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/50 text-xs uppercase tracking-[0.2em]">
+                +{tech.length - 5}
               </span>
             )}
           </div>
-          
-          <div className="flex justify-between items-center mt-auto">
-            <div className="flex gap-3">
-              <a 
-                href={github}
-                target="_blank" rel="noopener noreferrer"
-                aria-label={`Open ${title} on GitHub`}
-                className="text-slate-500 hover:text-slate-700 transition-colors duration-300"
-              >
-                <Github size={16} />
-              </a>
-              <a 
-                href={demo}
-                target="_blank" rel="noopener noreferrer"
-                aria-label={`Open live demo for ${title}`}
-                className="text-slate-500 hover:text-slate-700 transition-colors duration-300"
-              >
-                <ExternalLink size={16} />
-              </a>
-            </div>
-            <a 
-              href={demo}
-              target="_blank" rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 font-bold text-xs font-mono transition-colors duration-300"
-            >
-              View Project →
-            </a>
+        </div>
+
+        {metrics && (metrics.stars || metrics.commits) && (
+          <div className="flex flex-wrap gap-3 text-[11px] uppercase tracking-[0.25em] text-white/45">
+            {metrics.stars && (
+              <span className="inline-flex items-center gap-2 text-white/60">
+                <Star size={12} />
+                {metrics.stars}
+              </span>
+            )}
+            {metrics.commits && (
+              <span className="inline-flex items-center gap-2 text-white/60">
+                <Code size={12} />
+                {metrics.commits}
+              </span>
+            )}
           </div>
+        )}
+
+        <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/10">
+          <div className="text-xs uppercase tracking-[0.35em] text-white/40">
+            {metrics?.status ? metrics.status : 'Case Study'}
+          </div>
+          <a
+            href={demo && demo !== '#' ? demo : github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="outline-button px-5 py-2 text-xs uppercase tracking-[0.35em]"
+          >
+            View
+          </a>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

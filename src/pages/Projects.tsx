@@ -1,6 +1,6 @@
-
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { Sparkles, ListFilter, ArrowUpRight } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import Navigation from '../components/Navigation';
 
@@ -99,51 +99,144 @@ const Projects = () => {
     }
   ];
 
-  useEffect(() => {
-    gsap.fromTo(headerRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.2 }
-    );
+  const technologies = new Set<string>();
+  let liveProjects = 0;
 
-    const cards = gridRef.current?.children;
-    if (cards) {
-      gsap.fromTo(cards,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power2.out",
-          delay: 0.4
-        }
-      );
+  allProjects.forEach((project) => {
+    project.tech.forEach((item) => technologies.add(item));
+    if (project.demo && project.demo !== '#') {
+      liveProjects += 1;
     }
+  });
+
+  const stats = {
+    total: allProjects.length,
+    techCount: technologies.size,
+    liveCount: liveProjects,
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current.children,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            stagger: 0.14,
+          }
+        );
+      }
+
+      if (gridRef.current) {
+        gsap.fromTo(
+          gridRef.current.children,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power3.out',
+            delay: 0.3,
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <main id="main">
-      <div className="pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div ref={headerRef} className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-6">
-              All Projects
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Explore my complete portfolio of technical projects spanning AI, web development, 
-              mobile apps, and system design solutions.
-            </p>
-          </div>
+  const focusAreas = ['AI & Agents', 'Fintech', 'Commerce', 'SaaS Platforms', 'Interactive UX', 'Systems & Tools'];
 
-          <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
-            ))}
+  return (
+    <div className="relative min-h-screen bg-[#050810] text-white overflow-hidden">
+      <Navigation />
+      <main id="main" className="pt-24 pb-24">
+        <section className="relative overflow-hidden">
+          <div className="absolute -top-40 -right-20 h-[420px] w-[420px] rounded-full bg-[#6c5ce7]/35 blur-[160px]" />
+          <div className="absolute bottom-[-30%] -left-24 h-[380px] w-[380px] rounded-full bg-[#00b894]/25 blur-[150px]" />
+          <div className="noise-overlay" />
+          <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
+            <div ref={headerRef} className="space-y-10 text-center lg:text-left py-16">
+              <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 text-xs uppercase tracking-[0.35em] text-white/60">
+                <Sparkles size={16} className="text-[#9f95ff]" />
+                Project Archive
+              </span>
+              <div className="grid gap-10 lg:grid-cols-[3fr,2fr] lg:items-end">
+                <div className="space-y-6">
+                  <h1 className="text-[clamp(2.8rem,5vw,4.8rem)] leading-tight">
+                    Every build, wide open—in <span className="gradient-text">Elegant Bold</span> detail.
+                  </h1>
+                  <p className="text-white/65 text-lg max-w-2xl mx-auto lg:mx-0">
+                    Explore the full stack of experiments, products, and platforms I’ve crafted across AI systems, finance tools,
+                    commerce experiences, and rich interactive web applications.
+                  </p>
+                </div>
+                <div className="glass-effect rounded-3xl border border-white/10 px-7 py-8 text-left space-y-6">
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-white/45">
+                    <span>Total Projects</span>
+                    <span className="text-white text-2xl font-semibold tracking-[0.25em]">{stats.total}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-white/45">
+                    <span>Technologies</span>
+                    <span className="text-white text-2xl font-semibold tracking-[0.25em]">{stats.techCount}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-white/45">
+                    <span>Live Deploys</span>
+                    <span className="text-white text-2xl font-semibold tracking-[0.25em]">{stats.liveCount}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section className="relative">
+          <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
+              <div className="text-xs uppercase tracking-[0.35em] text-white/45 inline-flex items-center gap-3">
+                <ListFilter size={16} className="text-[#9f95ff]" />
+                Focus Areas
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {focusAreas.map((area) => (
+                  <span
+                    key={area}
+                    className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] uppercase tracking-[0.3em] text-white/60"
+                  >
+                    {area}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div
+              ref={gridRef}
+              className="grid gap-10 sm:grid-cols-2 xl:grid-cols-3 auto-rows-[minmax(0,1fr)]"
+            >
+              {allProjects.map((project) => (
+                <ProjectCard key={project.title} {...project} />
+              ))}
+            </div>
+
+            <div className="mt-16 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 border-t border-white/10 pt-10">
+              <p className="text-white/60 text-sm sm:text-base max-w-2xl">
+                Want a deep dive into any build or to explore collaboration? Let’s unpack code, architecture, or product thinking together.
+              </p>
+              <a
+                href="mailto:ghagsamarth@gmail.com"
+                className="primary-button px-6 py-3 text-xs uppercase tracking-[0.35em] inline-flex items-center gap-3"
+              >
+                Start a project
+                <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

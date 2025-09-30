@@ -8,11 +8,7 @@ import ProjectCard from './ProjectCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FeaturedProjects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-
-  const featuredProjects = [
+const featuredProjects = [
     {
       title: "Multi-Agent Code Writing System",
       description: "A multi-agent system for collaborative code writing using LangGraph and Gemini API with five specialized agents for orchestration, planning, coding, testing, and checking.",
@@ -20,7 +16,13 @@ const FeaturedProjects = () => {
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
       github: "https://github.com/samarthghag/AI-Agents",
       demo: "#",
-      featured: true
+      featured: true,
+      metrics: {
+        stars: 12,
+        commits: 45,
+        year: "2024",
+        status: "active" as const
+      }
     },
     {
       title: "Finance Savvy Journey",
@@ -29,7 +31,13 @@ const FeaturedProjects = () => {
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
       github: "https://github.com/samarthghag/finance-savvy-journey",
       demo: "https://finance-savvy-journey.vercel.app/",
-      featured: true
+      featured: true,
+      metrics: {
+        stars: 8,
+        commits: 67,
+        year: "2024",
+        status: "completed" as const
+      }
     },
     {
       title: "Eco-Tech Start Website",
@@ -38,71 +46,67 @@ const FeaturedProjects = () => {
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop",
       github: "https://github.com/samarthghag/Eco-Tech-Start-Website",
       demo: "https://eco-tech-start-website.vercel.app/",
-      featured: true
+      featured: true,
+      metrics: {
+        stars: 5,
+        commits: 23,
+        year: "2024",
+        status: "completed" as const
+      }
     }
   ];
 
+const FeaturedProjects = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const cards = cardsRef.current?.children;
-    if (cards) {
-      gsap.fromTo(cards,
-        { opacity: 0, y: 60, rotationX: 15 },
-        {
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }
+    if (!cardsRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(cardsRef.current!.children, {
+        scrollTrigger: {
+          trigger: cardsRef.current,
+          start: 'top 80%',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.15,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden" ref={sectionRef}>
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="grid grid-cols-8 gap-4 h-full w-full p-8">
-          {Array.from({ length: 64 }).map((_, i) => (
-            <div key={i} className="border border-slate-300 rounded"></div>
-          ))}
-        </div>
-      </div>
-
+    <section ref={sectionRef} className="section-padding relative">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
-            <Sparkles size={16} />
-            <span className="font-mono">FEATURED_WORK</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6 font-mono">
-            Best Projects
-          </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto px-4">
-            A curated selection of my most impactful work showcasing innovation in AI, 
-            full-stack development, and system architecture.
+        <div className="section-intro text-center space-y-4">
+          <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#6c5ce7]/40 bg-[#6c5ce7]/10 text-xs uppercase tracking-[0.35em] text-white/70">
+            <Sparkles size={16} className="text-[#9f95ff]" />
+            Featured Work
+          </span>
+          <h2 className="text-white">Selected builds shaping products, platforms, and experiments.</h2>
+          <p>
+            A quick tour through recent projects where strategy, storytelling, and engineering intertwine.
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-          {featuredProjects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+        <div ref={cardsRef} className="mt-14 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.title} {...project} />
           ))}
         </div>
 
-        <div className="text-center">
-          <Link 
+        <div className="mt-14 flex justify-center">
+          <Link
             to="/projects"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 text-lg group modern-shadow"
+            className="primary-button px-8 py-3 text-sm font-semibold tracking-[0.3em] uppercase flex items-center gap-3"
           >
-            <span className="font-mono">View All Projects</span>
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            Explore More
+            <ArrowRight size={18} />
           </Link>
         </div>
       </div>

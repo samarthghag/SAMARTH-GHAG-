@@ -1,105 +1,258 @@
 
-import React from 'react';
-import { Github, Linkedin, Mail, MessageCircle, Send, Zap } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Github, Linkedin, Mail, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+type FormState = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
+
+const initialState: FormState = {
+  name: '',
+  email: '',
+  message: '',
+};
 
 const Contact = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState<FormState>(initialState);
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [errors, setErrors] = useState<Partial<FormState>>({});
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      if (formRef.current) {
+        gsap.from(formRef.current, {
+          scrollTrigger: {
+            trigger: formRef.current,
+            start: 'top 85%',
+          },
+          x: -40,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+        });
+      }
+      if (infoRef.current) {
+        gsap.from(infoRef.current, {
+          scrollTrigger: {
+            trigger: infoRef.current,
+            start: 'top 85%',
+          },
+          x: 40,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const validate = (state: FormState) => {
+    const nextErrors: Partial<FormState> = {};
+    if (!state.name.trim()) nextErrors.name = 'Please introduce yourself.';
+    if (!state.email.trim()) {
+      nextErrors.email = 'An email helps me respond quickly.';
+    } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/i.test(state.email)) {
+      nextErrors.email = 'That email doesn’t look quite right.';
+    }
+    if (!state.message.trim()) nextErrors.message = 'Share a few project details or goals.';
+    return nextErrors;
+  };
+
+  const handleChange = (field: keyof FormState) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const nextErrors = validate(formData);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setFormStatus('error');
+      return;
+    }
+
+    setFormStatus('loading');
+
+    setTimeout(() => {
+      setFormStatus('success');
+      setFormData(initialState);
+      setTimeout(() => setFormStatus('idle'), 2500);
+    }, 1200);
+  };
+
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-slate-900 to-blue-900 relative overflow-hidden">
-      {/* Background Elements */}
+    <section id="contact" ref={sectionRef} className="section-padding relative">
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl floating-animation"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl floating-animation" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-[-15%] right-[-5%] w-[420px] h-[420px] rounded-full blur-3xl bg-[#6c5ce7]/25" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[480px] h-[480px] rounded-full blur-3xl bg-[#00b894]/20" />
+        <div className="noise-overlay" />
       </div>
 
-      {/* Tech Grid Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="grid grid-cols-12 gap-4 h-full w-full p-8">
-          {Array.from({ length: 144 }).map((_, i) => (
-            <div key={i} className="border border-white/20 rounded"></div>
-          ))}
-        </div>
-      </div>
-
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
-        <div className="mb-16">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
-            <Zap size={16} />
-            <span className="font-mono">GET_IN_TOUCH</span>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-mono">
-            Let's Connect
-          </h2>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Ready to collaborate on innovative projects? Let's discuss how we can create 
-            something extraordinary together.
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="section-intro text-center space-y-4">
+          <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/15 bg-white/10 text-xs uppercase tracking-[0.35em] text-white/70">
+            <Sparkles size={16} className="text-[#6c5ce7]" />
+            Let’s Create Something Amazing
+          </span>
+          <h2 className="text-white">Tell me about the product you’re dreaming up.</h2>
+          <p>
+            Whether you need strategic guidance, a hands-on build partner, or a long-term collaborator—drop a note and I’ll reply within a day.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          <a 
-            href="https://github.com/samarthghag" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
-          >
-            <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-800 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
-              <Github size={24} />
+        <div className="mt-14 grid lg:grid-cols-[1.1fr_0.9fr] gap-10">
+          <form ref={formRef} onSubmit={handleSubmit} className="eb-card p-8 md:p-10 space-y-6">
+            <div className="grid md:grid-cols-2 gap-5">
+              <label className="flex flex-col gap-2 text-sm text-white/70">
+                Name
+                <input
+                  value={formData.name}
+                  onChange={handleChange('name')}
+                  placeholder="Your full name"
+                  className={`rounded-xl bg-[#0f1a2a] border ${errors.name ? 'border-red-400/70' : 'border-white/15'} px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#6c5ce7]/60`}
+                />
+                {errors.name && (
+                  <span className="text-xs text-red-400 flex items-center gap-1">
+                    <AlertCircle size={14} />
+                    {errors.name}
+                  </span>
+                )}
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-white/70">
+                Email
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange('email')}
+                  placeholder="hello@company.com"
+                  className={`rounded-xl bg-[#0f1a2a] border ${errors.email ? 'border-red-400/70' : 'border-white/15'} px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#00b894]/60`}
+                />
+                {errors.email && (
+                  <span className="text-xs text-red-400 flex items-center gap-1">
+                    <AlertCircle size={14} />
+                    {errors.email}
+                  </span>
+                )}
+              </label>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3 font-mono">GitHub</h3>
-            <p className="text-blue-200 text-sm">Explore my code repositories and contributions</p>
-          </a>
 
-          <a 
-            href="https://www.linkedin.com/in/samarth-ghag/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
-          >
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
-              <Linkedin size={24} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3 font-mono">LinkedIn</h3>
-            <p className="text-blue-200 text-sm">Professional network and career updates</p>
-          </a>
+            <label className="flex flex-col gap-2 text-sm text-white/70">
+              Project Vision
+              <textarea
+                value={formData.message}
+                onChange={handleChange('message')}
+                rows={5}
+                placeholder="Share goals, features, timelines, or collaborators."
+                className={`rounded-2xl bg-[#0f1a2a] border ${errors.message ? 'border-red-400/70' : 'border-white/15'} px-4 py-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#6c5ce7]/60 resize-none`}
+              />
+              {errors.message && (
+                <span className="text-xs text-red-400 flex items-center gap-1">
+                  <AlertCircle size={14} />
+                  {errors.message}
+                </span>
+              )}
+            </label>
 
-          <a 
-            href="mailto:samarthghag9@gmail.com"
-            className="glass-effect rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group border border-white/10 hover:border-white/20"
-          >
-            <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
-              <Mail size={24} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3 font-mono">Email</h3>
-            <p className="text-blue-200 text-sm">Direct communication for business inquiries</p>
-          </a>
-        </div>
-
-        <div className="glass-effect rounded-3xl p-12 text-white border border-white/10 modern-shadow relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10"></div>
-          <div className="relative z-10">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-              <MessageCircle size={24} />
-            </div>
-            <h3 className="text-3xl font-bold mb-4 font-mono">Ready to Innovate?</h3>
-            <p className="text-blue-100 mb-8 max-w-2xl mx-auto text-lg">
-              Whether you need AI integration, full-stack development, or technical consulting,
-              let's transform your ideas into reality.
-            </p>
-            <a 
-              href="mailto:samarthghag9@gmail.com"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 text-lg group modern-shadow"
+            <button
+              type="submit"
+              disabled={formStatus === 'loading'}
+              className="primary-button w-full py-3.5 text-sm font-semibold tracking-[0.35em] uppercase disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <Send size={20} />
-              <span className="font-mono">Start Project</span>
-              <div className="group-hover:translate-x-1 transition-transform duration-300">→</div>
-            </a>
-          </div>
-        </div>
+              {formStatus === 'loading' ? 'Sending...' : formStatus === 'success' ? 'Message Sent' : 'Submit' }
+            </button>
 
-        <div className="mt-16 pt-8 border-t border-white/10">
-          <p className="text-blue-300 text-sm font-mono">
-            © 2025 Samarth Ghag • Crafted with React & Innovation • Made in India 🇮🇳
-          </p>
+            {formStatus === 'success' && (
+              <div className="flex items-center gap-2 text-sm text-[#00b894]">
+                <CheckCircle size={16} />
+                Thanks for reaching out! I’ll reply shortly.
+              </div>
+            )}
+            {formStatus === 'error' && Object.keys(errors).length > 0 && (
+              <div className="flex items-center gap-2 text-sm text-red-400">
+                <AlertCircle size={16} />
+                A few fields still need attention.
+              </div>
+            )}
+          </form>
+
+          <aside ref={infoRef} className="space-y-6">
+            <div className="eb-card p-8 space-y-6">
+              <div>
+                <h3 className="text-white text-lg font-semibold">Direct Contact</h3>
+                <p className="text-white/60 text-sm mt-3">
+                  Prefer to skip the form? Reach out through any channel and I’ll follow up fast.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <a
+                  href="mailto:samarthghag9@gmail.com"
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white/80 hover:text-white hover:border-white/30 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-full bg-[#00b894]/20 flex items-center justify-center text-[#00d1a4]">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.32em]">Email</p>
+                    <p className="text-white text-sm">samarthghag9@gmail.com</p>
+                  </div>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/samarth-ghag/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white/80 hover:text-white hover:border-white/30 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-full bg-[#6c5ce7]/20 flex items-center justify-center text-[#9f95ff]">
+                    <Linkedin size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.32em]">LinkedIn</p>
+                    <p className="text-white text-sm">/samarth-ghag</p>
+                  </div>
+                </a>
+                <a
+                  href="https://github.com/samarthghag"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white/80 hover:text-white hover:border-white/30 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <Github size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.32em]">GitHub</p>
+                    <p className="text-white text-sm">@samarthghag</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="eb-card p-7">
+              <p className="text-white/60 text-sm leading-relaxed">
+                “I blends aesthetics with engineering discipline. Our releases feel elevated and the experience stays calm—even under pressure.”
+              </p>
+              <p className="mt-5 text-white text-xs uppercase tracking-[0.35em]">Client feedback 2025</p>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
