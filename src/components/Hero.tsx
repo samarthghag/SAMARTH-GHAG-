@@ -88,7 +88,7 @@ const Hero = () => {
                 Get In Touch
               </button>
               <a
-                href="https://drive.google.com/file/d/1XOKuoKAruee00OcYLBLTU6xVRlCuYhB5/view?usp=sharing"
+                href="https://drive.google.com/file/d/1ZI3XF8bc7c4I2VRwOXjmEcGzpSjqyAHl/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="outline-button px-7 py-3 text-sm font-semibold tracking-[0.25em] uppercase flex items-center justify-center gap-2"
