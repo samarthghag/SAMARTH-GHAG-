@@ -104,7 +104,7 @@ const toolkit = [
 ];
 
 const contactStrings = [
-  'samarth.ghag.1504@gmail.com',
+  'samarthghag9@gmail.com',
   'linkedin.com/in/samarth-ghag',
   'github.com/samarthghag',
 ];
