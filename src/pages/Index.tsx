@@ -7,7 +7,7 @@ import Typewriter from '../components/Typewriter';
 
 const proofStats = [
   { metric: '1,500+', label: 'Students reached via Vault Vortex' },
-  { metric: '200+', label: 'College Circle community members' },
+  { metric: '200+', label: 'users on live platform' },
   { metric: '15', label: 'Months across active ventures' },
 ];
 
