@@ -1,190 +1,94 @@
+import { useEffect, useRef, useState } from 'react';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { gsap } from 'gsap';
-import Logo from './Logo';
+const navItems = [
+  { num: '01', name: 'Work', href: '#work' },
+  { num: '02', name: 'Experience', href: '#experience' },
+  { num: '03', name: 'Skills', href: '#skills' },
+  { num: '04', name: 'Toolkit', href: '#toolkit' },
+  { num: '05', name: 'Contact', href: '#contact' },
+];
+
+const clockFmt = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Kolkata',
+});
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [scrollPct, setScrollPct] = useState(0);
+  const [clock, setClock] = useState('--:--:--');
+  const [isDark, setIsDark] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
-      setScrolled(isScrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    if (navRef.current) {
-      gsap.fromTo(navRef.current,
-        { y: -100, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 1.5, 
-          ease: "power3.out", 
-          delay: 0.5 
-        }
-      );
-    }
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    const stored = localStorage.getItem('sg-theme') === 'dark';
+    document.documentElement.dataset.theme = stored ? 'dark' : 'light';
+    setIsDark(stored);
   }, []);
 
-  // Close mobile menu with Escape key for accessibility
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-      }
+    const onScroll = () => {
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        setScrollPct(max > 0 ? (window.scrollY / max) * 100 : 0);
+        rafRef.current = null;
+      });
     };
-    if (isOpen) {
-      window.addEventListener('keydown', onKeyDown);
-    }
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen]);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
-  const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' }
-  ];
+  useEffect(() => {
+    const tick = () => setClock(clockFmt.format(new Date()) + ' IST');
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, []);
 
-  const scrollToSection = (href: string) => {
-    if (href.startsWith('#')) {
-      if (location.pathname !== '/') {
-        // Go to home and pass section to scroll to
-        navigate('/', { state: { scrollTo: href } });
-      } else {
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-      setIsOpen(false);
-    }
-  };
-
-  const isActive = (href: string) => {
-    if (href === '/') return location.pathname === '/';
-    if (href === '/projects') return location.pathname === '/projects';
-    return false;
-  };
-
-  const renderNavItem = (item: typeof navItems[number]) => {
-    const active = isActive(item.href);
-    const sharedClasses = `group relative inline-flex items-center px-5 py-2 text-sm tracking-[0.22em] uppercase transition-colors duration-300 ${
-      active ? 'text-white' : 'text-white/70 hover:text-white'
-    }`;
-
-    if (item.href.startsWith('#')) {
-      return (
-        <button
-          key={item.name}
-          type="button"
-          onClick={() => scrollToSection(item.href)}
-          className={sharedClasses}
-        >
-          <span>{item.name}</span>
-          <span
-            className={`pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 h-[3px] w-8 rounded-full bg-gradient-to-r from-[#6c5ce7] to-[#00b894] transition-all duration-300 ${
-              active ? 'opacity-100 scale-100' : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-100'
-            }`}
-          />
-        </button>
-      );
-    }
-
-    return (
-      <Link
-        key={item.name}
-        to={item.href}
-        aria-current={active ? 'page' : undefined}
-        className={sharedClasses}
-      >
-        <span>{item.name}</span>
-        <span
-          className={`pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 h-[3px] w-8 rounded-full bg-gradient-to-r from-[#6c5ce7] to-[#00b894] transition-all duration-300 ${
-            active ? 'opacity-100 scale-100' : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-100'
-          }`}
-        />
-      </Link>
-    );
+  const toggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.dataset.theme = next ? 'dark' : 'light';
+    localStorage.setItem('sg-theme', next ? 'dark' : 'light');
   };
 
   return (
-    <nav
-      ref={navRef}
-      aria-label="Primary"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-[#0a121e]/95 backdrop-blur-xl shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)] border-b border-white/10' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 lg:px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3 text-white group">
-            <div className="hidden sm:block">
-              <Logo size="md" className="transition-transform duration-300 group-hover:scale-105" />
-            </div>
-            <span className="sm:hidden font-semibold tracking-[0.35em] uppercase text-xs">SG</span>
-          </Link>
+    <header className="site-nav">
+      <div className="site-container" style={{ padding: '14px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'var(--color-text)' }}>
+          <img src="/pic/sg-logo.png" alt="SG" style={{ width: 30, height: 30, display: 'block' }} />
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 17, letterSpacing: '-0.01em' }}>Samarth Ghag</span>
+        </a>
 
-          <div className="hidden md:flex flex-1 justify-center">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-lg border border-white/10">
-              {navItems.map(renderNavItem)}
-            </div>
-          </div>
+        <nav className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+          {navItems.map((item) => (
+            <a key={item.name} href={item.href} className="nav-link">{item.num} / {item.name}</a>
+          ))}
+        </nav>
 
-          <div className="md:hidden">
-            <button
-              type="button"
-              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={isOpen}
-              aria-controls="mobile-nav"
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-full border border-white/10 text-white/80 hover:text-white hover:border-white/30 transition-colors"
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <span className="clock-desktop" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text)', opacity: 0.5 }}>{clock}</span>
+          <button type="button" className="theme-toggle" aria-label="Toggle dark mode" onClick={toggleTheme}>
+            {isDark ? (
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+              </svg>
+            )}
+          </button>
+          <a href="#contact" className="btn btn-primary" style={{ fontSize: 13, padding: '9px 16px' }}>Get in touch</a>
         </div>
-
-        {isOpen && (
-          <div id="mobile-nav" className="md:hidden pb-4">
-            <div className="mt-2 rounded-3xl bg-[#112240]/95 border border-white/10 px-4 py-6 space-y-3 shadow-2xl">
-              {navItems.map((item) => (
-                item.href.startsWith('#') ? (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => scrollToSection(item.href)}
-                    className="w-full text-left text-white/80 hover:text-white px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    {item.name}
-                  </button>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block text-white/80 hover:text-white px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              ))}
-            </div>
-          </div>
-        )}
       </div>
-    </nav>
+      <div className="scroll-bar" style={{ width: `${scrollPct}%` }} />
+    </header>
   );
 };
 
